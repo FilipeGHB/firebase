@@ -6,13 +6,19 @@ from kivy.uix.button import Button
 from kivy.core.window import Window
 from kivy.uix.image import Image
 from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.uix.popup import Popup
 import requests
 import json
 from firebase import firebase
 import firebase_admin
+from firebase_admin import credentials
+
+
+cred_obj = credentials.Certificate('oi.json')
+firebase_admin.initialize_app(cred_obj)
+
 
 firebase = firebase.FirebaseApplication("https://loginextra-7b7cc-default-rtdb.firebaseio.com/", None)
-cred_obj = firebase_admin.credentials.Certificate('oi.json')
 
 class TelaLogin(BoxLayout):
     def __init__(self, **kwargs):
@@ -53,6 +59,28 @@ class TelaLogin(BoxLayout):
         print('Username:', username)
         print('Password:', password)
 
+        
+        users = firebase.get('/Tabela', None)
+        if users:
+            for user in users.values():
+                if user['Email'] == username and user['Senha'] == password:
+                    self.show_popup("Logado Com Sucesso!")
+                    return
+        self.show_popup("Usuário ou senha incorretos!")
+
+    def show_popup(self, message):
+        content = BoxLayout(orientation='vertical', padding=10, spacing=10)
+        content.add_widget(Label(text=message, font_size=20))
+        close_button = Button(text="Fechar", size_hint_y=None, height=50)
+        content.add_widget(close_button)
+
+        popup = Popup(title='Mensagem',
+                      content=content,
+                      size_hint=(None, None),
+                      size=(400, 200))
+        close_button.bind(on_press=popup.dismiss)
+        popup.open()
+
 class TelaCadastro(BoxLayout):
     def __init__(self, **kwargs):
         super(TelaCadastro, self).__init__(**kwargs)
@@ -86,7 +114,7 @@ class TelaCadastro(BoxLayout):
         senha = self.password_input.text
 
         dados = {'Email': email, 'Senha': senha}
-        requisicao = requests.post("https://loginextra-7b7cc-default-rtdb.firebaseio.com//Tabela/.json", data=json.dumps(dados))
+        requisicao = requests.post("https://loginextra-7b7cc-default-rtdb.firebaseio.com/Tabela.json", data=json.dumps(dados))
 
         if requisicao.status_code == 200:
             print("Dados enviados!")
@@ -114,4 +142,5 @@ class MyApp(App):
 
 if __name__ == '__main__':
     MyApp().run()
+
 
