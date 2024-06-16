@@ -28,7 +28,7 @@ class TelaLogin(BoxLayout):
         self.spacing = 10
 
         Window.clearcolor = (0, 0, 0.1, 1)
-        self.add_widget(Image(source='/Users/aluno.sesipaulista/Documents/Login/img/imagem.png'))
+        self.add_widget(Image(source='imagem.png'))
 
         self.add_widget(Label(text='L O G I N', font_size=30, bold=True))
 
@@ -59,7 +59,7 @@ class TelaLogin(BoxLayout):
         print('Username:', username)
         print('Password:', password)
 
-        
+       
         users = firebase.get('/Tabela', None)
         if users:
             for user in users.values():
