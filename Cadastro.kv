@@ -1,0 +1,39 @@
+ScreenManager:
+    Cadastro:
+
+<Cadastro>:
+    name: 'cadastro'
+
+    FloatLayout:
+
+        Label:
+            text: 'CADASTRO'
+            pos_hint: {'center_x':0.5, 'center_y':0.85}
+            font_size: 30
+            color: (0,0,0,1)
+
+        TextInput:
+            id: email
+            hint_text: 'E-mail'
+            pos_hint: {'center_x':0.5, 'center_y':0.7}
+            size_hint: 0.6, 0.05
+
+        TextInput: 
+            id: senha
+            hint_text: 'Senha'
+            pos_hint: {'center_x':0.5, 'center_y':0.60}
+            size_hint: 0.6, 0.05
+
+        Button:
+            text: 'Cadastrar'
+            pos_hint: {'center_x':0.5, 'center_y':0.45}
+            size_hint: 0.6, 0.1
+            background_color: (1,1,1,0.8)
+            on_release: app.Cadastrar()
+
+        Label:
+            text: 'A conta já existe'
+            pos_hint: {'center_x':0.5, 'center_y':0.05}
+            font_size: 30
+            color: (1,0,0,0)
+            id: erro

@@ -1,0 +1,65 @@
+#:include cadastro.kv
+#:include logado.kv
+
+ScreenManager:
+    Login:
+    Cadastro:
+    Logado:
+
+<Logado>: 
+    name: 'Logado'
+
+<Cadastro>:
+    name: 'cadastro'
+
+<Login>:
+    name: 'login'
+    FloatLayout:
+
+        AsyncImage:
+            source: 'https://i.pinimg.com/originals/13/d3/03/13d3034f9cd9ce043598f88da8b11267.png'
+            size_hint: (0.5, 0.5)
+            pos_hint: ('center_x':0.5, 'center_y':0.5)
+
+        AsyncImage:
+            source: "https://i.pinimg.com/originals/4b/3e/02/4b3e0279e016cc145240de10c8a06fb6.png"
+            pos_hint: {'center_x': 0.5, 'center_y':0.75}
+            size_hint: 0.25, 0.25
+
+        TextInput:
+            id: email
+            hint_text: 'E-mail'
+            pos_hint: {'center_x':0.5, 'center_y':0.5}
+            size_hint: 0.6, 0.05
+
+        TextInput:
+            id: senha
+            hint_text: 'Senha'
+            pos_hint: {'center_x':0.5, 'center_y':0.4}
+            size_hint: 0.6, 0.05
+
+        Button:
+            text: 'Login'
+            background_normal: ''
+            background_color: (0,0,0,0.8)
+            pos_hint: {'center_x':0.5, 'center_y':0.3}
+            size_hint: 0.3, 0.1
+            font_size: 30
+            on_release: app.log()
+
+        Button:
+            text: 'Cadastro'
+            background_normal: ''
+            background_color: (0,0,0,0.8)
+            pos_hint: {'center_x':0.5, 'center_y':0.15}
+            size_hint: 0.3, 0.1
+            font_size: 30
+            on_release: app.root.current = 'cadastro'
+
+        Label:
+            text: 'Login incorreto'
+            pos_hint: {'center_x':0.5, 'center_y':0.05}
+            font_size: 30
+            color: (1,0,0,0)
+            id: l
+
